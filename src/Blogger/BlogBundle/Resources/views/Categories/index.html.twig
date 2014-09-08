@@ -1,0 +1,79 @@
+{% extends 'BloggerBlogBundle::layout.html.twig' %}
+
+{% block title %}
+	 All Categories
+{% endblock %}
+
+{% block content%}
+	<script>
+		$(document).ready(function(){
+			{%if error_msg is defined%}
+				$('#text').text("{{error_msg}}");
+				$('#alert').fadeIn('slow');
+			{%endif%}
+		});
+	</script>
+	
+	<!-- begin PAGE TITLE ROW -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title">
+                    <h1>Show
+                        <small>All Categories</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-dashboard"></i>  <a href="{{path("blogger_blog_homepage")}}">Dashboard</a>
+                        </li>
+                        <li class="active">Categories</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <!-- end PAGE TITLE ROW -->
+		
+		<div>
+            <div class="portlet portlet-blue">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h4>Categories</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+				
+				<div class="portlet-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="table-layout:fixed;">
+                            <thead>
+                                <tr>
+                                    <th sytle="width=30px;">#</th>
+									<th sytle="word-wrap: break-word;">name</th>
+                                    <th sytle="word-wrap: break-word;">Actions</th>
+                                    <th sytle="word-wrap: break-word;"><a href='{{ path("admin_categories_add") }}' style='color:green'>New</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if categories is defined and categories|length > 0%}
+									{% for category in categories %}
+										<tr>
+											<td>{{category.getId()}}</td>
+											<td sytle="word-wrap: break-word;"><a href='{{ path("admin_categories_edit" , {'CategoryId': category.getId()}) }}'>{{category.getName()}}</a></td>
+											<td sytle="word-wrap: break-word;"><a href='{{ path("admin_categories_delete" , {'CategoryId': category.getId()}) }}' class='delete' >delete </a></td>
+											<td sytle="word-wrap: break-word;"></td>
+										</tr>
+									{% endfor  %}
+								{%else%}
+									<tr>
+										<td colspan="4"><center>No Data Found</center></td>
+									</tr>  
+								{% endif  %}
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- /.portlet -->
+        </div>
+{% endblock%}

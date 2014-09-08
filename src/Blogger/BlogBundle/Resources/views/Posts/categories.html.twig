@@ -1,0 +1,110 @@
+{% extends 'BloggerBlogBundle::layout.html.twig' %}
+
+{% block title %}
+	 All Post Categories
+{% endblock %}
+
+{% block content%}
+
+	<script>
+		$(document).on("click" , "#save" , function(){
+			var categories = new Array();   
+                $( ".categories" ).each(function( index ) {
+                     if($(this).prop('checked')===true){
+                        var category = new Array($(this).val());
+                        categories.push(category);
+                     }
+                    
+                });
+                var assignedCategories = new FormData();
+                assignedCategories.append('Post_id',$('#id').val());
+                assignedCategories.append('categories',categories);
+
+                $.ajax({
+                    url:'{{ path("admin_posts_categories_save") }}',
+                    type:'POST',
+                    processData: false,
+                    contentType:false,
+                    data:assignedCategories,
+                    success: function(response) {
+                        var response = JSON.parse(response);
+						console.log(response);
+                        if(response.status == "OK"){
+							var route = "{{path('admin_posts_categories' , { 'PostId' : 'value'})}}";
+							route = route.replace("value", $('#id').val());
+                            window.location.href= route;
+                        }else{
+                            $('#text').text(response.data);
+                            $('#alert').fadeIn('slow');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorMessage) {
+                        $('#text').text(errorMessage);
+                        $('#alert').fadeIn('slow');
+                    }
+                });
+		
+		});
+	</script>
+	
+	<!-- begin PAGE TITLE ROW -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title">
+                    <h1>Show
+                        <small>All Post Categories</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-dashboard"></i>  <a href="{{path("blogger_blog_homepage")}}">Dashboard</a>
+                        </li>
+                        <li class="active">Post Categories</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <!-- end PAGE TITLE ROW -->
+		
+		
+		<div>
+            <div class="portlet portlet-blue">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h4>Categories</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                    <input type='hidden' id='id' value='{{Post_id}}'/>
+                        {% if categories|length > 0%}
+                            {% for category in categories %}
+                                    <input type="checkbox" id="{{category.getId()}}" name="{{category.getId()}}" value="{{category.getId()}}" class="categories">
+                                    <label id="l{{category.getId()}}" for='{{category.getId()}}'>{{category.getName()}}</label>
+                                    </input>
+                            {% endfor  %}
+                        {%else%}
+                            <center><p>No Data Found</p></center>
+                        {%endif%}
+                        {% if categories|length > 0 and post_categories|length > 0%}
+                            {% for post_category in post_categories %}
+                                <script>
+                                    $("#{{post_category.getCategoryId()}}").prop('checked', true);
+                                </script>
+                            {% endfor  %}
+                        {%else%}
+
+                        {%endif%}
+                    </div>
+                    <hr>
+                    <center>
+                        <button id='save' type="button" class="btn btn-green">Save</button>
+                    </center>
+                </div>
+                    
+            </div>
+            <!-- /.portlet -->
+        </div>
+{% endblock %}

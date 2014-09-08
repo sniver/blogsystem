@@ -1,0 +1,91 @@
+{% extends 'BloggerBlogBundle::layout.html.twig' %}
+
+{% block title %}
+	 All Posts
+{% endblock %}
+
+{% block content%}
+	<script>
+		$(document).ready(function(){
+			{%if error_msg is defined%}
+				$('#text').text("{{error_msg}}");
+				$('#alert').fadeIn('slow');
+			{%endif%}
+		});
+	</script>
+	
+	<!-- begin PAGE TITLE ROW -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title">
+                    <h1>Show
+                        <small>All Posts</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-dashboard"></i>  <a href="{{path("blogger_blog_homepage")}}">Dashboard</a>
+                        </li>
+                        <li class="active">Posts</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <!-- end PAGE TITLE ROW -->
+		
+		<div>
+            <div class="portlet portlet-blue">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h4>Posts</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+				
+				<div class="portlet-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="table-layout:fixed;">
+                            <thead>
+                                <tr>
+                                    <th sytle="width=30px;">#</th>
+									<th sytle="word-wrap: break-word;">title</th>
+									<th sytle="word-wrap: break-word;">content</th>
+									<th sytle="word-wrap: break-word;">author</th>
+									<th sytle="word-wrap: break-word;">status</th>
+                                    <th sytle="word-wrap: break-word;">Actions</th>
+                                    <th sytle="word-wrap: break-word;"><a href='{{ path("admin_posts_add") }}' style='color:green'>New</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if posts is defined and posts|length > 0%}
+									{% for post in posts %}
+										<tr>
+											<td>{{post.getId()}}</td>
+											<td sytle="word-wrap: break-word;"><a href='{{ path("admin_posts_edit" , {'PostId': post.getId()}) }}'>{{post.getTitle()}}</a></td>
+											<td sytle="word-wrap: break-word;">{{post.getContent()}}</td>
+											<td sytle="word-wrap: break-word;">{{post.getAuthor()}}</td>
+											{%if post.getStatus() == "1"%}
+												<td sytle="word-wrap: break-word;color:green;">Active</td>
+											{%else%}
+												<td sytle="word-wrap: break-word;color:red;">Deactive</td>
+											{%endif%}
+											
+											<td sytle="word-wrap: break-word;"><a href='{{ path("admin_posts_delete" , {'PostId': post.getId()}) }}' class='delete' >delete </a>
+											<a href='{{ path("admin_posts_categories" , {'PostId': post.getId()}) }}' class='categories' >Categories </a></td>
+											<td sytle="word-wrap: break-word;"></td>
+										</tr>
+									{% endfor  %}
+								{%else%}
+									<tr>
+										<td colspan="7"><center>No Data Found</center></td>
+									</tr>  
+								{% endif  %}
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- /.portlet -->
+        </div>
+{% endblock%}

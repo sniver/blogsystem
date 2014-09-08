@@ -1,0 +1,77 @@
+blogger_blog_homepage:
+    path:     /
+    defaults: { _controller: BloggerBlogBundle:Default:index }
+
+admin_posts:
+    path:     admin/posts
+    defaults: { _controller: BloggerBlogBundle:Posts:get }
+
+admin_posts_add:
+    path:     admin/posts/add
+    defaults: { _controller: BloggerBlogBundle:Posts:add }
+
+admin_posts_save:
+    path:     admin/posts/save
+    defaults: { _controller: BloggerBlogBundle:Posts:save }
+
+
+admin_posts_edit:
+    path:     admin/posts/edit/{PostId}
+    defaults: { _controller: BloggerBlogBundle:Posts:edit }
+
+admin_posts_update:
+    path:     admin/posts/update
+    defaults: { _controller: BloggerBlogBundle:Posts:update }
+
+admin_posts_delete:
+    path:     admin/posts/delete/{PostId}
+    defaults: { _controller: BloggerBlogBundle:Posts:delete }
+
+
+admin_posts_categories:
+    path:     admin/posts/category/{PostId}
+    defaults: { _controller: BloggerBlogBundle:Posts:categories }
+
+admin_posts_categories_save:
+    path:     admin/posts/categories/save
+    defaults: { _controller: BloggerBlogBundle:Posts:assignCategories }
+
+admin_categories:
+    path:     admin/categories
+    defaults: { _controller: BloggerBlogBundle:Categories:get }
+
+admin_categories_add:
+    path:     admin/categories/add
+    defaults: { _controller: BloggerBlogBundle:Categories:add }
+
+admin_categories_save:
+    path:     admin/categories/save
+    defaults: { _controller: BloggerBlogBundle:Categories:save }
+
+
+admin_categories_edit:
+    path:     admin/categories/edit/{CategoryId}
+    defaults: { _controller: BloggerBlogBundle:Categories:edit }
+
+
+admin_categories_update:
+    path:     admin/categories/update
+    defaults: { _controller: BloggerBlogBundle:Categories:update }
+
+
+admin_categories_delete:
+    path:     admin/categories/delete/{CategoryId}
+    defaults: { _controller: BloggerBlogBundle:Categories:delete }
+
+login:
+    path:     index/login
+    defaults: { _controller: BloggerBlogBundle:Index:login }
+
+logout:
+    path:     index/logout
+    defaults: { _controller: BloggerBlogBundle:Index:logout }
+
+index:
+    path:     index
+    defaults: { _controller: BloggerBlogBundle:Index:index }
+

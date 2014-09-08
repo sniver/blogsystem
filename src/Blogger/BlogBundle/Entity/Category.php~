@@ -1,0 +1,25 @@
+<?php
+
+// src/Blogger/BlogBundle/Entity/Posts.php
+namespace Blogger\BlogBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+     *@ORM\Entity
+     *@ORM\Table(name="category")
+     */
+class Category
+{
+	/**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+	
+	/**
+     * @ORM\Column(type="string")
+     */
+    protected $name;
+}

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+			<meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="description" content="">
+            <meta name="author" content="">
+			{% block stylesheets %}
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/plugins/bootstrap/css/bootstrap.min.css')}}" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/plugins/bootstrap-datepicker/datepicker3.css')}}" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/icons/font-awesome/css/font-awesome.min.css')}}" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/plugins/daterangepicker/daterangepicker-bs3.css')}}" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/plugins/datatables/datatables.css')}}" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/style.css')}}" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/plugins.css')}}" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/demo.css')}}" />
+				<link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" />
+				<link type="text/css" rel="stylesheet" href="{{asset('bundles/BlogBundle/css/style.css')}}" />
+			{%endblock%}
+			
+			{% block javascripts %}
+				<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/jquery.min.js')}}"></script>
+				
+				<script>
+						$(document).ready(function(){
+							$( document ).ajaxStart(function() {
+								$('#loader').fadeIn('slow');
+							});
+							$( document ).ajaxSend(function() {
+								$('#loader').fadeIn('slow');
+							});
+							$( document ).ajaxStop(function() {
+								$('#loader').fadeOut('slow');
+							});
+							$( document ).ajaxComplete(function() {
+								$('#loader').fadeOut('slow');
+							});
+							$( document ).ajaxError(function() {
+								$('#loader').fadeOut('slow');
+							});
+							$('#closemessage').click(function(){
+								$('#alert').fadeOut('slow');
+							});
+							
+							var base_url = "{{ app.request.uri }}";
+							if( base_url === "/")
+							{
+							}else{
+								if(base_url.indexOf("/categories") > -1){
+									$('#categories').collapse('show');
+									$('#categories').attr('data-toggle', '');
+								}
+								if(base_url.indexOf("/posts") > -1){
+									$('#posts').collapse('show');
+									$('#posts').attr('data-toggle', '');
+								}
+							}
+							console.log(base_url);
+						});
+			   </script>
+				
+			{%endblock%}
+			
+			<title>{% block title %}{% endblock %}</title>
+			
+	</head>
+	
+	<body>
+		<div id="wrapper">
+
+				<!-- begin TOP NAVIGATION -->
+				<nav class="navbar-top" role="navigation">
+
+					<!-- begin BRAND HEADING -->
+					<div class="navbar-header">
+						
+					</div>
+					<!-- end BRAND HEADING -->
+					
+					
+					<div class="nav-top">
+
+                <!-- begin LEFT SIDE WIDGETS -->
+                
+                <!-- end LEFT SIDE WIDGETS -->
+				
+				<!-- begin MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+                <ul class="nav navbar-right">
+                    <!-- begin USER ACTIONS DROPDOWN -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a class="logout_open" href="#logout">
+                                    <i class="fa fa-sign-out"></i> Logout
+                                    <strong></strong>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-menu -->
+                    </li>
+                    <!-- /.dropdown -->
+                    <!-- end USER ACTIONS DROPDOWN -->
+
+                </ul>
+                <!-- /.nav -->
+                <!-- end MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+
+            </div>
+            <!-- /.nav-top -->
+        </nav>
+        <!-- /.navbar-top -->
+        <!-- end TOP NAVIGATION -->
+		
+		
+		
+		<!-- begin SIDE NAVIGATION -->
+        <nav class="navbar-side collapsed" role="navigation">
+            <div class="navbar-collapse sidebar-collapse collapse">
+                <!-- /.side-nav -->
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+        <!-- /.navbar-side -->
+        <!-- end SIDE NAVIGATION -->
+		
+		<!-- begin MAIN PAGE CONTENT -->
+        <div id="page-wrapper" class="collapsed">
+
+            <div class="page-content page-content-ease-in">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+		<div id="loader" style="position:fixed;top:0px;left:0px;width:100%;height:100%;background-color:rgba(000,000,000,0.8);display:none;z-index:2000;">
+				<img src="{{asset('bundles/BlogBundle/img/ajax-loader.gif')}}" style="margin:0px auto;margin-top:25%;margin-left:45%;" />
+	    </div>
+		
+		
+		<div id="alert" style="position:fixed;top:0px;left:0px;width:100%;height:100%;background-color:rgba(000,000,000,0.8);z-index:2000;display:none;">
+	    		<div id='message' style='margin:0px auto;margin-top:22%;margin-left:50%;width:20%;padding:10px;background-color:#fff;border-radius:5px;'>
+                    <center>
+                        <div id='text'></div>
+                        <br>
+                        <input id='closemessage' type='button' value='close' class="btn btn-blue" />
+                    </center>
+                </div>
+	    </div>
+		
+		</div>
+    <!-- /#wrapper -->
+        <!-- Logout Notification Box -->
+        <div id="logout">
+            <div class="logout-message">
+				<img src="{{asset('bundles/BlogBundle/img/profile-pic.jpg')}}" class="img-circle img-logout" />
+                <h3>
+                    <i class="fa fa-sign-out text-green"></i> Ready to go?
+                </h3>
+                <p>Select "Logout" below if you are ready<br> to end your current session.</p>
+                <ul class="list-inline">
+                    <li>
+                        <a href="{{ path("logout") }}" class="btn btn-green">
+                            <strong>Logout</strong>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="logout_close btn btn-green">Cancel</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /#logout -->
+		
+		
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/bootstrap/bootstrap.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/popupoverlay/jquery.popupoverlay.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/popupoverlay/defaults.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/popupoverlay/logout.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/hisrc/hisrc.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/daterangepicker/moment.js')}}"></script>
+		
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/plugins/daterangepicker/daterangepicker.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/demo/dashboard-demo.js')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/BlogBundle/js/flex.js')}}"></script>
+		
+	</body>
